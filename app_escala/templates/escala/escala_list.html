@@ -1,0 +1,102 @@
+{% block content %}
+
+{% include 'main.html' %}
+    <div class="container-fluid">
+        <i><h5>Produção das  Escala</h5></i>
+        <div class="card">
+            <div class="card-body">
+                <form method="GET">
+                    {% csrf_token %}
+
+                    <div class="row">
+                                    
+                                    <div class="col">
+                                        Ano de Produção<br>
+                                        {{ filter.form.data_producao__year }}
+                                    
+                                        <br>
+
+                                        Mês de Pagamento<br>
+                                        {{ filter.form.data_pagamento__month }}
+                                    </div>
+                                    
+                                    <div class="col">
+                                         Porta: <br> 
+                                        {{ filter.form.porta__icontains }}
+                                        
+                                        <br>
+
+                                        convênio<br>
+                                        {{ filter.form.convenio__icontains }}
+                                    </div>
+                                    
+                                    <div class="col">
+                                        Prestador<br>
+                                        {{ filter.form.prestador }}
+
+                                        <br>
+                                        Especialidade<br>
+                                        {{ filter.form.especialidade }}
+                                        
+                                    </div>
+                                    
+                                    <div class="col">
+                                        Escala<br>
+                                        {{ filter.form.escala__icontains }}
+                                    
+                                        
+                                    </div>
+                                
+                                    
+                            
+                            <div class="col">
+                                <input class="btn btn-primary" type="submit" value="Filtrar">
+                            </div>
+                        </div>
+                        </form>
+            </div>
+      </div>
+    </div>
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Modificação</th>
+                    <th>Prestador</th>
+                    <th>DT Produção</th>
+                    <th>DT Pagamento</th>
+                    <th>Porta</th>
+                    <th>Convênio</th>
+                    <th>Escala</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Especialidade</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in filter.qs %}
+                <tr>
+                    <td>{{ i.modificacao | date:'d/m/Y G:i:s' }}</td>
+                    <td>{{ i.prestador }}</td>
+                    <td>{{ i.data_producao | date:'m/Y' }}</td>
+                    <td>{{ i.data_pagamento | date:'m/Y' }}</td>
+                    <td>{{ i.porta }}</td>
+                    <td>{{ i.convenio }}</td>
+                    <td>{{ i.escala }}</td>
+                    <td>{{ i.quantidade }}</td>
+                    <td>{{ i.valor }}</td>
+                    <td>{{ i.especialidade }}</td>
+                    <td><a href="{% url 'escala_update' i.id %}">Editar</a></td>
+                    <td><a href="{% url 'escala_delete' i.id %}">Excluir</a></td>                 
+                    
+                    
+                </tr>
+                {% endfor%}
+            </tbody>
+            
+        </table>
+    </div>
+{% endblock %}

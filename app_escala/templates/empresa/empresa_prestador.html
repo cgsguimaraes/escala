@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<div class="container">
+    
+    <i><h5>Empresa:Prestador</h5></i>
+    <h4>{{ empresa }}</h4>
+    <hr>
+   
+    <form method="POST">
+        
+            {% csrf_token %}
+            {{ formset.as_p }}   
+             <br>
+            <input class="btn btn-primary" type="submit" value="Confirmar">
+        
+    </form>
+    
+</div>
+
+{% endblock %}

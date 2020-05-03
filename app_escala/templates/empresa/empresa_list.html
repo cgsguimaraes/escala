@@ -1,0 +1,60 @@
+{% block content %}
+    {% include 'main.html' %}
+    <div class="container-fluid">
+        <i><h5>Lista das Empresas Cadastradas</h5></i>
+        <div class="card">
+            <div class="card-body">
+                <form method="GET">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col col-md-2">
+                            Código: <br><hr>
+                            {{ filter.form.codigo__icontains }}
+                        </div>
+
+                        <div class="col col-sm-2">
+                            Nome: <br><hr>
+                            {{ filter.form.nome__icontains }}
+                        </div>
+
+                        <div class="col col-sm-2">
+                            Ativo ?: <br><hr>
+                            {{ filter.form.situacao }}
+                        </div>
+
+                        <div class="col">
+                            <br>
+                            <input class="btn btn-primary" type="submit" value="Filtrar">
+                        </div>
+
+                    </div>
+                    
+                </form>
+
+            </div>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Situação</th>
+                <th>Editar</th>
+            </thead>
+            <tbody>
+                {% for e in filter.qs %}
+                <tr>
+                    <td>{{ e.codigo }}</td>
+                    <td>{{ e.nome }}</td>
+                    <td>{{ e.situacao }}</td>
+                    <td><a href="{% url 'empresa_update' e.id %}">Editar</a></td>
+                </tr>
+                {% endfor %}    
+            </tbody>
+            
+        </table>
+        
+        
+    </div>
+{% endblock %}

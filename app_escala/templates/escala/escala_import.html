@@ -1,0 +1,35 @@
+{% include 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="jumbotron">
+        
+        <h1 class="display-4">Importar Escala</h1>
+
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+            
+            <input class="btn btn-secondary" name="myfile" type="file"/>
+            <button class="btn btn-primary" type="submit">Upload</button>
+            <br>    
+            
+        </form>
+
+        <br>
+        <br>
+        <a href="{% static 'media/teste.xlsx' %}">Download</a>
+
+        
+         
+        
+        
+                 
+        
+    </div>
+</div>
+{% endblock%}

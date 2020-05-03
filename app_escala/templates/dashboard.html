@@ -1,0 +1,107 @@
+{% block content %}
+{% include 'main.html' %}
+
+    
+    <div class="container-fluid">
+        <h2>Painel</h2>
+        <!--
+        <div class="row">
+            <div class="col">
+                <h5> Escala </h5>
+                    <div class="card card-body">
+                        <a class="btn btn-primary  btn-sm btn-block" href="{% url 'escala_view' %}">Escala</a>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>DT Produção</th>
+                                    <th>DT Pagamento</th>
+                                    <th>Prestador</th>
+                                    <th>Quantidade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in escala %}
+                                <tr>
+                                    <td>{{ i.data_producao | date:'m/Y' }}</td>
+                                    <td>{{ i.data_pagamento | date:'m/Y' }}</td>
+                                    <td>{{ i.prestador }}</td>
+                                    <td>{{ i.quantidade }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>                    
+            </div>
+        </div>
+        <br><br><br>
+
+        <div class="row">
+          <div class="col">
+            <h5> Empresa </h5>
+            <div class="card card-body">
+                <a class="btn btn-primary  btn-sm btn-block" href="{% url 'empresa_view' %}">Empresa</a>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>View</th>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Editar</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in empresa %}
+                            <tr>
+                                <td><a href="{% url 'empresa' i.id %}">View</a></td>
+                                <td>{{i.codigo }}</td>
+                                <td>{{i.nome }} </td>
+                                <td><a href="{% url 'empresa_update' i.id %}">Editar</a></td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        
+          </div>
+
+
+          <div class="col">
+            <h5> Prestador </h5>
+            <div class="card card-body">
+                <a class="btn btn-primary  btn-sm btn-block" href="{% url 'prestador_view' %}">Prestador</a>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Empresa</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in prestador %}
+                            <tr>
+                                <td>{{i.codigo }}</td>
+                                <td>{{i.nome }}</td>
+                                <td>{{i.empresa }}</td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        </div>
+    -->        
+      </div>
+
+    
+    
+
+{% endblock %}

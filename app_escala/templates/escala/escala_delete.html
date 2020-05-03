@@ -1,0 +1,48 @@
+{% block content %}
+
+{% include 'main.html' %}
+    <div class="container">
+        <i><h5>Deletar Escala</h5></i>
+
+        <h4> Deseja deletar Lançamento ? </h4>
+        <form method="POST">
+
+            {% csrf_token %}
+
+        <hr>
+        
+        <ul>
+            <li><b>Prestador: </b> {{object.prestador }}</li>
+            <hr>
+            <li><b>Data Produção: </b>{{ object.data_producao }}</li>
+            <hr>
+            <li><b>Data Pagamento: </b>{{ object.data_pagamento }}</li>
+            <hr>
+            <li><b>Convênio: </b>{{ object.convenio }}</li>
+            <hr>
+            <li><b>Porta: </b>{{ object.porta }}</li>
+            <hr>
+            <li><b>Quantidade: </b>{{ object.quantidade }}</li>
+            <hr>
+            <li><b>Valor: </b>{{ object.valor }}</li>
+            
+
+            
+        </ul>
+
+
+
+        <div class="row">
+            <div class="col">
+                <input class="btn btn-primary" type="submit" value="Deletar">
+                <a class="btn btn-danger" href="{% url 'escala_list' %}">Cancelar</a>
+            </div>
+            
+        </div>
+        
+                    
+
+        </form>
+    </div>
+
+{% endblock %}

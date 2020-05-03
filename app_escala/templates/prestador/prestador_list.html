@@ -1,0 +1,70 @@
+{% block content %}
+
+{% include 'main.html'%}
+    <div class="container-fluid">
+        <i><h5>Lista dos Prestadores Cadastrados</h5></i>
+        <div class="card">
+            <div class="card-body">
+                <form method="GET">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col col-md-2">
+                            <b>Código</b>:<br><hr>
+                            {{ filter.form.codigo__icontains }}
+                        </div>
+
+                        <div class="col col-sm-2">
+                            <b>Nome:</b><br><hr>
+                            {{ filter.form.nome__icontains }}
+
+                        </div>
+                        <div class="col col-sm-6">
+                            <b>Empresa:</b> <br><hr>
+                            {{ filter.form.empresa}}
+
+                        </div>
+
+
+                        <div class="col">
+                            <br>
+                            <input class="btn btn-primary" type="submit" value="Filtrar">
+                        </div>
+
+                    </div>
+                    
+                    
+                </form>
+            </div>
+        </div>
+
+
+        <table class="table table-hover">
+            <thead>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Prestador Ativo?</th>
+                <th>Empresa</th>
+                <th>Editar</th>
+            </thead>
+            <tbody>
+                {% for p in filter.qs %}
+                <tr>
+                    <td>{{ p.codigo }}</td>
+                    <td>{{ p.nome }}</td>
+                    <td>{{ p.situacao }}</td>
+                    <td>{{ p.empresa }} | {{ p.empresa.codigo }}</td>
+                    <td><a href="{% url 'prestador_update' p.id %}">Editar</a></td>
+                    
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+{% endblock %}

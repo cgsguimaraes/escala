@@ -1,0 +1,94 @@
+{% block content %}
+{{ form.media.css }}
+{% include 'main.html' %}
+    <div class="container">
+        <i><h5>Cadastro de Escala - COPY</h5></i>
+        <form method="POST">
+            {% csrf_token %}
+
+            
+            <div class="row">
+                <div class="col">
+                    <label> Prestador </label>
+                    {{form.prestador}}
+                </div>
+                
+            </div>
+
+            <br>
+            
+            <div class="row">
+                <div class="col">
+                    <label> Data de Produção </label>
+                    {{form.data_producao}}
+                </div>
+                
+                <div class="col">
+                    <label> Data de Pagamento </label>
+                    {{form.data_pagamento }}
+                </div>
+
+                <div class="col">
+                    <label> Tipo de Escala </label>
+                    {{form.escala }}
+                </div>
+
+                <div class="col">
+                    <label> Quantidade </label>
+                    {{form.quantidade }}
+                </div>
+
+                <div class="col">
+                    <label> Valor </label>
+                    {{form.valor }}
+                </div>
+
+
+            </div>
+
+            <br>
+            
+            <div class="row">
+                <div class="col">
+                    <label> Porta </label>
+                    {{form.porta }}
+                </div>
+                
+                <div class="col">
+                    <label> Convênio </label>
+                    {{form.convenio }}
+                </div>
+
+                <div class="col">
+                    <label> Especialidade </label>
+                    {{form.especialidade }}
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label> Procedimento </label>
+                    {{form.procedimento_sus }}
+                </div>
+            </div>
+
+        <br><br>
+
+        <div class="row">
+            <div class="col">
+                <input class="btn btn-primary" type="submit" value="Cadastrar">
+                <a class="btn btn-danger" href="{% url 'escala_list' %}">Cancelar</a>
+            </div>
+            
+        </div>
+        
+                    
+
+        </form>
+    </div>
+
+    <script>
+        {{ form.media.js }}
+    </script>
+{% endblock %}
