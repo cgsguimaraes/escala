@@ -3,17 +3,12 @@
 
 {% include 'main.html' %}
     <div class="container">
-        <i><h5>Cadastro das Especialidade</h5></i>
+        <i><h5>Cadastro dos Serviços</h5></i>
         <form method="POST">
 
             {% csrf_token %}
         
-            <div class="row">
-                <div class="col">
-                    Código:
-                    {{ form.codigo }}
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col">
                     Nome:
@@ -32,7 +27,7 @@
             
             <br>
             <input class="btn btn-primary" type="submit" value="Cadastrar">
-            <a class="btn btn-danger" href="{% url 'especialidade_list' %}">Cancelar</a>
+            <a class="btn btn-danger" href="{% url 'servico_list' %}">Cancelar</a>
         </form>
     </div>
 

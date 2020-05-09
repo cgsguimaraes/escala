@@ -1,7 +1,7 @@
 import django_filters
 from django import forms
 from django.db import models
-from .models import Escala, Prestador, Empresa, Especialidade
+from .models import Escala, Prestador, Empresa, Especialidade, Servico
 
 class EscalaFilter(django_filters.FilterSet):
     class Meta:
@@ -14,7 +14,7 @@ class EscalaFilter(django_filters.FilterSet):
             'convenio' : ['icontains'],
             'prestador' : ['exact'],
             'escala': ['icontains'],
-            'especialidade': ['exact']
+            
             }
 
         
@@ -44,6 +44,13 @@ class EspecialidadeFilter(django_filters.FilterSet):
     class Meta:
         model = Especialidade
         fields = {
-            'codigo': ['icontains'],
+            'nome': ['icontains']
+        }
+
+
+class ServicoFilter(django_filters.FilterSet):
+    class Meta:
+        model = Servico
+        fields = {
             'nome': ['icontains']
         }

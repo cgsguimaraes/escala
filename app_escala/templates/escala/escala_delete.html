@@ -12,20 +12,118 @@
         <hr>
         
         <ul>
-            <li><b>Prestador: </b> {{object.prestador }}</li>
-            <hr>
-            <li><b>Data Produção: </b>{{ object.data_producao }}</li>
-            <hr>
-            <li><b>Data Pagamento: </b>{{ object.data_pagamento }}</li>
-            <hr>
-            <li><b>Convênio: </b>{{ object.convenio }}</li>
-            <hr>
-            <li><b>Porta: </b>{{ object.porta }}</li>
-            <hr>
-            <li><b>Quantidade: </b>{{ object.quantidade }}</li>
-            <hr>
-            <li><b>Valor: </b>{{ object.valor }}</li>
+            <div class="row">
+                 
+                <div class="col">
+                    <b>Prestador: </b>
+                </div>                
+                <div class="col-10">
+                    {{object.prestador }}
+
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <b>Multi Empresa: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.empresa_multi }}
+                </div>                
+            </div>
             
+            <div class="row">
+                <div class="col">
+                    <b>Data Produção: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.data_producao|date:'d/m/Y' }}
+                </div>                
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <b>Data Pagamento: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.data_pagamento|date:'d/m/Y'}}
+                </div>                
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <b>Quantidade: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.quantidade }}
+                </div>                
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <b>Valor: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.valor }}
+                </div>                
+            </div>
+            
+            
+            <div class="row">
+                <div class="col">
+                    <b>Escala: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.escala }}
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <b>Porta: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.porta }}
+                </div>                
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <b>Convênio: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.convenio }}
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <b>Especialidade: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.especialidade }}
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <b>Serviço: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.servico }}
+                </div>                
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <b>Procedimento: </b>
+                </div>                
+                <div class="col-10">
+                    {{ object.procedimento_sus }}
+                </div>                
+            </div>
+            
+            <hr>
 
             
         </ul>

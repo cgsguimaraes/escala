@@ -14,7 +14,7 @@ class Base(models.Model):
         abstract = True
 
 class Empresa(Base):
-    codigo = models.CharField('Codigo', max_length=60, null=False, blank=False, unique=True)
+    codigo = models.CharField(max_length=60, primary_key=True)
     nome = models.CharField('Nome', max_length=80, null=False, blank=False)
     #prestador = models.ManyToManyField(Prestador)
 
@@ -30,7 +30,7 @@ class Empresa(Base):
 
 
 class Prestador(Base):
-    codigo = models.CharField('Codigo Prestador', max_length=15, blank=False, null=False, unique=True)
+    codigo = models.CharField(max_length=15, primary_key=True)
     nome = models.CharField('Nome Prestador', max_length=60, blank=False, null=False)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     
@@ -43,8 +43,7 @@ class Prestador(Base):
 
 
 class Especialidade(Base):
-    codigo = models.CharField('Codigo', max_length=3, null=True, blank=True, default='')
-    nome = models.CharField('Codigo', max_length=35, unique=True, null=False, blank=False)
+    nome = models.CharField('Codigo', max_length=35)
 
     def __str__(self):
         return self.nome
@@ -55,7 +54,7 @@ class Especialidade(Base):
         verbose_name_plural = 'Especialidades'
 
 class ProcedimentoSUS(Base):
-    codigo = models.CharField('Codigo Procedimento', max_length=10)
+    codigo = models.CharField(max_length=10, primary_key=True)
     nome = models.CharField('Codigo Procedimento', max_length=260)
 
     def __str__(self):
@@ -66,6 +65,28 @@ class ProcedimentoSUS(Base):
         verbose_name_plural = 'Procedimentos'
 
 
+class MultiEmpresa(models.Model):
+    codigo = models.CharField(max_length=4, primary_key=True)
+    nome = models.CharField(max_length=15)
+
+    class Meta:
+        verbose_name = 'Multi Empresa'
+        verbose_name_plural = 'Multi Empresas'
+
+    def __str__(self):
+        return self.nome
+
+class Servico(Base):
+    nome = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Servico'
+        verbose_name_plural = 'Servicos'
+        ordering = ['nome']
+
 
 class Escala(Base):
     TIPO = [
@@ -73,6 +94,7 @@ class Escala(Base):
         ('AMBULATORIO', 'AMBULATORIO'),
         ('INTERNACAO', 'INTERNACAO'),
         ('EXAMES', 'EXAMES'),
+        ('ENFERMARIA', 'ENFERMARIA'),
     ]
 
     CONVENIO = [
@@ -89,6 +111,7 @@ class Escala(Base):
         ('QUANTIDADE', 'QUANTIDADE'),
     ]
 
+
     prestador = models.ForeignKey(Prestador, on_delete=models.CASCADE)
     data_producao = models.DateField('Data Produção')
     data_pagamento = models.DateField()
@@ -96,11 +119,12 @@ class Escala(Base):
     valor = models.DecimalField(max_digits=8, decimal_places=2)
     porta = models.CharField(max_length=20, choices=TIPO)
     convenio = models.CharField(max_length=10, choices=CONVENIO)
-    #servico = models.CharField(max_length=80)
+    servico_escala = models.ForeignKey(Servico, on_delete=models.CASCADE, null=True, blank=True, default='')
     procedimento_sus = models.ForeignKey(ProcedimentoSUS, on_delete=models.CASCADE, null=True, blank=True, default='')
     especialidade = models.ForeignKey(Especialidade, on_delete=models.CASCADE, null=True, blank=True)
     escala = models.CharField('escala', choices=ESC, max_length=20, default='', null=True, blank=True)
-    
+    empresa_multi = models.ForeignKey(MultiEmpresa, on_delete=models.CASCADE)
+
 
     class Meta:
         ordering = ['-modificacao']

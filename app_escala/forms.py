@@ -1,6 +1,6 @@
 from django import forms
 from django_select2 import forms as s2form
-from. models import Empresa, Prestador, Escala, Especialidade
+from. models import Empresa, Prestador, Escala, Especialidade, Servico
 
 
 class EmpresaForm(forms.ModelForm):
@@ -28,7 +28,8 @@ class EspecialidadeForm(forms.ModelForm)       :
         model = Especialidade
         fields = ['nome', 'situacao']
         widgets = {
-            'nome'    : forms.TextInput(attrs={'class': 'form-control'}),
+            'nome'    : forms.TextInput(attrs={'class': 'form-control'})
+            
             
         }
 
@@ -41,7 +42,7 @@ class EscalaForm(forms.ModelForm):
     data_pagamento = forms.DateField(widget=DateInput(attrs={'class':'form-control'}))
     class Meta:
         model = Escala
-        fields = ['prestador', 'data_producao', 'data_pagamento', 'quantidade', 'valor', 'porta', 'convenio', 'especialidade', 'escala', 'procedimento_sus']
+        fields = ['prestador', 'data_producao', 'data_pagamento', 'quantidade', 'valor', 'porta', 'convenio', 'especialidade', 'escala', 'procedimento_sus', 'empresa_multi', 'servico_escala']
         widgets = {
             'quantidade': forms.TextInput(attrs={'class':'form-control'}),
             'prestador' : forms.Select(attrs={'class':'form-control'}),
@@ -51,5 +52,17 @@ class EscalaForm(forms.ModelForm):
             'porta' : forms.Select(attrs={'class':'form-control'}),
             'convenio' : forms.Select(attrs={'class':'form-control'}),
             'especialidade' : forms.Select(attrs={'class':'form-control'}),
-            'procedimento_sus' : forms.Select(attrs={'class':'form-control'})
+            'procedimento_sus' : forms.Select(attrs={'class':'form-control'}),
+            'empresa_multi' : forms.Select(attrs={'class':'form-control'}),
+            'servico_escala' : forms.Select(attrs={'class':'form-control'}),
+
         }
+
+class ServicoForm(forms.ModelForm):
+    class Meta:
+        model = Servico
+        fields = ['nome', 'situacao']
+        widgets = {
+            'nome': forms.TextInput(attrs={'class':'form-control'})
+        }
+

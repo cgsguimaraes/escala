@@ -8,11 +8,18 @@
 
             
             
-            <label> Prestador</label>
+            
             <div class="row">
+                
                 <div class="col">
+                    <label> Prestador</label>
                     {{form.prestador}}
                     
+                </div>
+
+                <div class="col">
+                    <label> Empresa </label>
+                    {{form.empresa_multi }}
                 </div>
                 
             </div>
@@ -31,11 +38,6 @@
                 </div>
 
                 <div class="col">
-                    <label> Tipo de Escala </label>
-                    {{form.escala }}
-                </div>
-
-                <div class="col">
                     <label> Quantidade </label>
                     {{form.quantidade }}
                 </div>
@@ -51,6 +53,12 @@
             <br>
             
             <div class="row">
+
+                <div class="col">
+                    <label> Tipo de Escala </label>
+                    {{form.escala }}
+                </div>
+
                 <div class="col">
                     <label> Porta </label>
                     {{form.porta }}
@@ -65,10 +73,19 @@
                     <label> Especialidade </label>
                     {{form.especialidade }}
                 </div>
+
+                <div class="col">
+                    <label> Servico </label>
+                    {{form.servico_escala }}
+                
+                </div>
             </div>
 
             <br>
             <div class="row">
+                
+
+                
                 <div class="col">
                     <label> Procedimento </label>
                     {{form.procedimento_sus }}

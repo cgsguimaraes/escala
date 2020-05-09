@@ -37,6 +37,8 @@
                                         <br>
                                         Especialidade<br>
                                         {{ filter.form.especialidade }}
+
+                                        
                                         
                                     </div>
                                     
@@ -71,6 +73,8 @@
                     <th>Quantidade</th>
                     <th>Valor</th>
                     <th>Especialidade</th>
+                    <th>Serviço</th>
+                    <th>Multi_Empresa</th>
                     <th>Editar</th>
                     <th>Excluir</th>
 
@@ -81,14 +85,16 @@
                 <tr>
                     <td>{{ i.modificacao | date:'d/m/Y G:i:s' }}</td>
                     <td>{{ i.prestador }}</td>
-                    <td>{{ i.data_producao | date:'m/Y' }}</td>
-                    <td>{{ i.data_pagamento | date:'m/Y' }}</td>
+                    <td>{{ i.data_producao | date:'d/m/Y' }}</td>
+                    <td>{{ i.data_pagamento | date:'d/m/Y' }}</td>
                     <td>{{ i.porta }}</td>
                     <td>{{ i.convenio }}</td>
                     <td>{{ i.escala }}</td>
                     <td>{{ i.quantidade }}</td>
                     <td>{{ i.valor }}</td>
                     <td>{{ i.especialidade }}</td>
+                    <td>{{ i.servico_escala }}</td>
+                    <td>{{ i.empresa_multi.nome }}</td>
                     <td><a href="{% url 'escala_update' i.id %}">Editar</a></td>
                     <td><a href="{% url 'escala_delete' i.id %}">Excluir</a></td>                 
                     

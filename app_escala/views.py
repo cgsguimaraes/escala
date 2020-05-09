@@ -6,12 +6,17 @@ from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django import forms
 from django.forms.widgets import TextInput
-from django.views.generic import FormView, UpdateView, CreateView, ListView, DeleteView
+from django.views.generic import FormView, UpdateView, CreateView, ListView, DeleteView, TemplateView
 from django.contrib.auth.decorators import login_required
 
-from .models import Empresa, Prestador, Escala, ProcedimentoSUS, Especialidade
-from .forms import EmpresaForm, PrestadorForm, EscalaForm, EspecialidadeForm
-from .filters import EscalaFilter, PrestadorFilter, EmpresaFilter, EspecialidadeFilter
+from .models import Empresa, Prestador, Escala, ProcedimentoSUS, Especialidade, Servico
+from .forms import EmpresaForm, PrestadorForm, EscalaForm, EspecialidadeForm, ServicoForm
+from .filters import EscalaFilter, PrestadorFilter, EmpresaFilter, EspecialidadeFilter, ServicoFilter
+
+from app_escala.actions import export_xls
+
+from excel_response import ExcelResponse
+from openpyxl import Workbook
 
 
 
@@ -34,7 +39,7 @@ def home(request):
         'escala' : escala,
         'escala_qt': escala_qt
     }
-    return render(request, 'dashboard.html', context)
+    return render(request, 'main.html', context)
 
 def empresa_prestador(request, pk_empresa):
     empresa = Empresa.objects.get(pk=pk_empresa)
@@ -96,6 +101,7 @@ class EmpresaUpdateView(UpdateView):
     success_url = reverse_lazy('empresa_list')
     
 
+
 class PrestadorView(CreateView):
     template_name = 'prestador/prestador.html'
     form_class = PrestadorForm
@@ -106,6 +112,7 @@ class PrestadorView(CreateView):
     
     def form_invalid(self, form):
         return super().form_invalid(form)
+
 
 
 class PrestadorListView(ListView):
@@ -125,7 +132,6 @@ class PrestadorUpdateView(UpdateView):
     success_url = reverse_lazy('prestador_list')
 
 
-
 class EscalaView(CreateView):
     template_name = 'escala/escala.html'
     form_class = EscalaForm
@@ -138,36 +144,42 @@ class EscalaView(CreateView):
         return super().form_invalid(form)
     
 
+
 def save_data(data):
     aux = []
     for item in data:
         criacao = item.get('criacao')
         modificacao = item.get('modificacao')
         situacao = item.get('situacao')
+        prestador_id = item.get('prestador_id')
         data_producao = item.get('data_producao')
         data_pagamento = item.get('data_pagamento')
         quantidade = item.get('quantidade')
         valor = item.get('valor')
         porta = item.get('porta')
         convenio = item.get('convenio')
-        especialidade_id = item.get('especialidade_id')
-        prestador_id = item.get('prestador_id')
         procedimento_sus_id = item.get('procedimento_sus_id')
+        especialidade_id = item.get('especialidade_id')
         escala = item.get('escala')
+        empresa_multi_id = item.get('empresa_multi_id')
+        servico_escala_id = item.get('servico_escala_id')
+        
         obj = Escala(
             criacao = criacao,
             modificacao = modificacao,
             situacao = situacao,
+            prestador_id = prestador_id,
             data_producao = data_producao,
             data_pagamento = data_pagamento,
             quantidade = quantidade,
             valor = valor,
             porta = porta,
             convenio = convenio,
-            especialidade_id = especialidade_id,
-            prestador_id = prestador_id,
             procedimento_sus_id = procedimento_sus_id,
-            escala = escala
+            especialidade_id = especialidade_id,
+            escala = escala,
+            empresa_multi_id = empresa_multi_id,
+            servico_escala_id = servico_escala_id,
         )        
         aux.append(obj)
     Escala.objects.bulk_create(aux)
@@ -186,6 +198,7 @@ def import_csv(request):
     template_name = 'escala/escala_import.html'
     return render(request, template_name)
 
+
 def download_modelo(request):
     modelo = HttpResponse('escala-filter/media/teste.xlsx')
     return modelo
@@ -201,7 +214,13 @@ class EscalaViewCopy(CreateView):
         return super().form_valid(form)
     
     def form_invalid(self, form):
-        return super().form_invalid(form)    
+        return super().form_invalid(form)  
+
+
+class PrestadorExcel(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return export_xls.plan_prestador()
+
 
    
     
@@ -228,8 +247,21 @@ class EscalaDeleteView(DeleteView):
     success_url = reverse_lazy('escala_list')
 
 
-def plan_excel():
-    pass
+def exportar_modelo_excel(request):
+    obj = Especialidade.objects.all()
+    return ExcelResponse(obj)
+    #filename = "modelo_importacao.xlsx"
+    #wb = Workbook()
+    #sheet = wb.active
+    #sheet['A1'] = "Id"
+    #sheet['B1'] = "Especialidade"
+    #wb.save(filename=filename)
+
+
+class EscalaExcel(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return export_xls.plan_escala()
+    
 
 @login_required
 def escala_filter(request):
@@ -280,6 +312,8 @@ class EspecialidadeList(ListView):
         context['filter'] = EspecialidadeFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
+
+
 class EspecialidadeUpdate(UpdateView):
     template_name = 'especialidade/especialidade.html'
     model = Especialidade
@@ -288,3 +322,36 @@ class EspecialidadeUpdate(UpdateView):
 
 
 
+class EspecialidadeExcel(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return  export_xls.plan_especialidade()
+    
+
+
+class ServicoView(CreateView):
+    template_name = 'servico/servico.html'
+    form_class = ServicoForm
+    success_url = reverse_lazy('servico_list')
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+     
+
+class ServicoList(ListView):
+    template_name = 'servico/servico_list.html'
+    model = Servico
+    
+    def get_context_data(self,  **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ServicoFilter(self.request.GET, queryset = self.get_queryset())
+        return context
+
+
+class ServicoUpdate(UpdateView):
+    template_name = 'servico/servico.html'
+    model = Servico
+    form_class = ServicoForm
+    success_url = reverse_lazy('servico_list')
