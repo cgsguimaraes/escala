@@ -1,6 +1,6 @@
 from openpyxl import Workbook
 from django.http import HttpResponse
-from app_escala.models import Especialidade, Escala, Prestador, Servico
+from app_escala.models import Especialidade, Escala, Prestador, Servico, Empresa
 
 
 def plan_especialidade():
@@ -60,6 +60,67 @@ def plan_prestador():
     wb.save(response)
     return response
     
+
+def plan_empresa():
+    empresa = Empresa.objects.all()
+    empresa_qt = empresa.count()
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Empresa"
+
+    ws['A1'] = "Controle de Escala"
+    ws['A2'] = 'Cadastro das Empresas'
+    ws['A3'] = "Quantidade Cadastrada: {}".format(empresa_qt)
+    
+    linha_empresa = 6
+
+    ws['A{}'.format(linha_empresa - 1)] = "Codigo"
+    ws['B{}'.format(linha_empresa - 1)] = "Nome"    
+
+    for empresa in empresa:
+        ws.cell(row=linha_empresa, column=1).value = empresa.codigo
+        ws.cell(row=linha_empresa, column=2).value = empresa.nome
+        linha_empresa +=1
+    
+    file_name = "Empresa.xlsx"
+    response = HttpResponse(content_type='Application/ms-excel')
+    content = "attachment; filename = {0}".format(file_name)
+    response['Content-Disposition'] = content
+    wb.save(response)
+    return response
+     
+
+def plan_servico():
+    servico = Servico.objects.all()
+    servico_qt = servico.count()
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Servico"
+
+    ws['A1'] = "Controle de Escala"
+    ws['A2'] = 'Cadastro dos Serviços'
+    ws['A3'] = "Quantidade Cadastrada: {}".format(servico_qt)
+    
+    linha_servico = 6
+
+    ws['A{}'.format(linha_servico - 1)] = "Codigo"
+    ws['B{}'.format(linha_servico - 1)] = "Nome"
+
+    for servico in servico:
+        ws.cell(row=linha_servico, column=1).value = servico.id
+        ws.cell(row=linha_servico, column=2).value = servico.nome
+        linha_servico +=1
+
+    file_name = "Servico.xlsx"
+    response = HttpResponse(content_type='Application/ms-excel')
+    content = "attatchment; filename = {0}".format(file_name)
+    response['Content-Disposition'] = content
+    wb.save(response)
+    return response
+
+
+
 
 def plan_escala():
 

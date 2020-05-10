@@ -93,13 +93,16 @@ class EmpresaListView(ListView):
         return context
 
 
-
 class EmpresaUpdateView(UpdateView):
     model = Empresa
     form_class = EmpresaForm
     template_name = 'empresa/empresa.html'
     success_url = reverse_lazy('empresa_list')
     
+
+class EmpresaExcel(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return export_xls.plan_empresa()
 
 
 class PrestadorView(CreateView):
@@ -355,3 +358,8 @@ class ServicoUpdate(UpdateView):
     model = Servico
     form_class = ServicoForm
     success_url = reverse_lazy('servico_list')
+
+
+class ServicoExcel(TemplateView):
+    def get(self, request, *args, **kwargs):
+        return export_xls.plan_servico()
